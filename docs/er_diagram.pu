@@ -6,11 +6,13 @@
 
 table(users) {
   primary_key(id) UUID
-  email VARCHAR
-  display_name VARCHAR
-  password_hash VARCHAR
+  user_id VARCHAR
+  name VARCHAR
+  image_url VARCHAR
+  role VARCHAR
   created_at DATETIME
   updated_at DATETIME
+  daleted_at DATETIME
 }
 
 table(rooms) {
@@ -18,6 +20,7 @@ table(rooms) {
   name VARCHAR
   created_at DATETIME
   updated_at DATETIME
+  deleted_at DATETIME
 }
 
 table(user_rooms) {
@@ -25,6 +28,7 @@ table(user_rooms) {
   foreign_key(user_id) UUID
   foreign_key(room_id) UUID
   created_at DATETIME
+  deleted_at DATETIME
 }
 
 table(messages) {
@@ -34,10 +38,12 @@ table(messages) {
   content VARCHAR
   original_language VARCHAR
   created_at DATETIME
+  updated_at DATETIME
+  daleted_at DATETIME
 }
 
 table(translations) {
-  primary_key(id) UUID
+  primary_key(id) INT
   foreign_key(message_id) UUID
   content VARCHAR
   language VARCHAR
@@ -46,12 +52,9 @@ table(translations) {
 }
 
 users ||-r-o{ user_rooms
-rooms ||-r-o{ user_rooms
-user_rooms }o--|| users
-user_rooms }o--|| rooms
+rooms ||-l-o{ user_rooms
 rooms ||--o{ messages
 users ||--o{ messages
 messages ||--o{ translations
-translations }o--|| messages
 
 @enduml
