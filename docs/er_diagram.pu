@@ -1,0 +1,57 @@
+@startuml
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <b><u>x</u></b>
+!define foreign_key(x) <i><u>x</u></i>
+
+table(users) {
+  primary_key(id) UUID
+  email VARCHAR
+  display_name VARCHAR
+  password_hash VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+table(rooms) {
+  primary_key(id) UUID
+  name VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+table(user_rooms) {
+  primary_key(id) UUID
+  foreign_key(user_id) UUID
+  foreign_key(room_id) UUID
+  created_at DATETIME
+}
+
+table(messages) {
+  primary_key(id) UUID
+  foreign_key(room_id) UUID
+  foreign_key(user_id) UUID
+  content VARCHAR
+  original_language VARCHAR
+  created_at DATETIME
+}
+
+table(translations) {
+  primary_key(id) UUID
+  foreign_key(message_id) UUID
+  content VARCHAR
+  language VARCHAR
+  created_at DATETIME
+  updated_at DATETIME
+}
+
+users ||-r-o{ user_rooms
+rooms ||-r-o{ user_rooms
+user_rooms }o--|| users
+user_rooms }o--|| rooms
+rooms ||--o{ messages
+users ||--o{ messages
+messages ||--o{ translations
+translations }o--|| messages
+
+@enduml
