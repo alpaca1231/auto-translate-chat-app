@@ -1,8 +1,6 @@
 import { FC, ReactNode } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { SignOut } from "@/components/SignOut";
-import { SignIn } from "@/components/SignIn";
-import { SignUp } from "@/components/SignUp";
+import { useAuth, useUser } from "@/hooks";
+import { SignOut, SignIn, SignUp } from "@/components";
 
 type LayoutProps = {
   children: ReactNode;
@@ -10,11 +8,15 @@ type LayoutProps = {
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
   const { session } = useAuth();
+  const { user } = useUser();
   return (
     <>
       <header>
         {session ? (
-          <SignOut />
+          <>
+            <p>{user?.name}</p>
+            <SignOut />
+          </>
         ) : (
           <>
             <SignIn />

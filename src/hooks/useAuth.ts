@@ -7,7 +7,7 @@ export const useAuth = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
 
@@ -20,12 +20,16 @@ export const useAuth = () => {
     if (error) {
       setError(error);
     }
+    await supabase.from("users").insert([{ user_id: data.user?.id, name: "guest", email }]);
     return data;
   };
 
   // Email signIn
   const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error) {
       setError(error);
     }
