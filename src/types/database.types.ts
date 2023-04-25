@@ -34,7 +34,148 @@ export interface Database {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      messsages: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          daleted_at: string | null
+          id: string
+          original_language: string | null
+          room_id: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          daleted_at?: string | null
+          id: string
+          original_language?: string | null
+          room_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          daleted_at?: string | null
+          id?: string
+          original_language?: string | null
+          room_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+      }
+      rooms: {
+        Row: {
+          created_at: string | null
+          daleted_at: string | null
+          id: string
+          name: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          daleted_at?: string | null
+          id: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          daleted_at?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+        }
+      }
+      translations: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          id: string
+          language: string | null
+          message_id: string | null
+          update_at: string | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          id: string
+          language?: string | null
+          message_id?: string | null
+          update_at?: string | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          language?: string | null
+          message_id?: string | null
+          update_at?: string | null
+        }
+      }
+      user_rooms: {
+        Row: {
+          created_at: string | null
+          deleted_at: string | null
+          id: string
+          room_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          deleted_at?: string | null
+          id?: string
+          room_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          deleted_at?: string | null
+          id?: string
+          room_id?: string | null
+          user_id?: string | null
+        }
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          daleted_at: string | null
+          email: string | null
+          id: string
+          image_url: string | null
+          language: string | null
+          name: string | null
+          role: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          daleted_at?: string | null
+          email?: string | null
+          id?: string
+          image_url?: string | null
+          language?: string | null
+          name?: string | null
+          role?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          daleted_at?: string | null
+          email?: string | null
+          id?: string
+          image_url?: string | null
+          language?: string | null
+          name?: string | null
+          role?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+      }
     }
     Views: {
       [_ in never]: never

@@ -9,6 +9,7 @@ table(users) {
   user_id VARCHAR
   name VARCHAR
   image_url VARCHAR
+  language VARCHAR
   role VARCHAR
   created_at DATETIME
   updated_at DATETIME
