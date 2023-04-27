@@ -34,11 +34,11 @@ export interface Database {
   }
   public: {
     Tables: {
-      messsages: {
+      messages: {
         Row: {
           content: string | null
           created_at: string | null
-          daleted_at: string | null
+          deleted_at: string | null
           id: string
           original_language: string | null
           room_id: string | null
@@ -48,7 +48,7 @@ export interface Database {
         Insert: {
           content?: string | null
           created_at?: string | null
-          daleted_at?: string | null
+          deleted_at?: string | null
           id: string
           original_language?: string | null
           room_id?: string | null
@@ -58,7 +58,7 @@ export interface Database {
         Update: {
           content?: string | null
           created_at?: string | null
-          daleted_at?: string | null
+          deleted_at?: string | null
           id?: string
           original_language?: string | null
           room_id?: string | null
@@ -69,21 +69,21 @@ export interface Database {
       rooms: {
         Row: {
           created_at: string | null
-          daleted_at: string | null
+          deleted_at: string | null
           id: string
           name: string | null
           updated_at: string | null
         }
         Insert: {
           created_at?: string | null
-          daleted_at?: string | null
+          deleted_at?: string | null
           id: string
           name?: string | null
           updated_at?: string | null
         }
         Update: {
           created_at?: string | null
-          daleted_at?: string | null
+          deleted_at?: string | null
           id?: string
           name?: string | null
           updated_at?: string | null
@@ -141,7 +141,7 @@ export interface Database {
       users: {
         Row: {
           created_at: string | null
-          daleted_at: string | null
+          deleted_at: string | null
           email: string | null
           id: string
           image_url: string | null
@@ -153,7 +153,7 @@ export interface Database {
         }
         Insert: {
           created_at?: string | null
-          daleted_at?: string | null
+          deleted_at?: string | null
           email?: string | null
           id?: string
           image_url?: string | null
@@ -165,7 +165,7 @@ export interface Database {
         }
         Update: {
           created_at?: string | null
-          daleted_at?: string | null
+          deleted_at?: string | null
           email?: string | null
           id?: string
           image_url?: string | null

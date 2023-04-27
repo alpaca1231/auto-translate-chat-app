@@ -13,7 +13,7 @@ table(users) {
   role VARCHAR
   created_at DATETIME
   updated_at DATETIME
-  daleted_at DATETIME
+  deleted_at DATETIME
 }
 
 table(rooms) {
@@ -40,7 +40,7 @@ table(messages) {
   original_language VARCHAR
   created_at DATETIME
   updated_at DATETIME
-  daleted_at DATETIME
+  deleted_at DATETIME
 }
 
 table(translations) {
