@@ -10,12 +10,12 @@ export const useUser = () => {
   const { session } = useAuth();
   const sessionUser = session?.user;
 
-  const getUser = useCallback(async () => {
+  const fetchUser = useCallback(async () => {
     if (!sessionUser) return;
     const { data, error } = await supabase
       .from("users")
       .select("*")
-      .eq("user_id", sessionUser.id)
+      .eq("id", sessionUser.id)
       .single();
 
     if (error) {
@@ -28,11 +28,11 @@ export const useUser = () => {
 
   useEffect(() => {
     try {
-      getUser();
+      fetchUser();
     } catch (error) {
       console.error(error);
     }
-  }, [getUser]);
+  }, [fetchUser]);
 
-  return { user, getUser };
+  return { user, fetchUser };
 };

@@ -6,7 +6,6 @@
 
 table(users) {
   primary_key(id) UUID
-  user_id VARCHAR
   name VARCHAR
   image_url VARCHAR
   language VARCHAR
@@ -18,6 +17,7 @@ table(users) {
 
 table(rooms) {
   primary_key(id) UUID
+  foreign_key(create_user_id) UUID
   name VARCHAR
   created_at DATETIME
   updated_at DATETIME

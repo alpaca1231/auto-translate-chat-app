@@ -20,7 +20,10 @@ export const useAuth = () => {
     if (error) {
       setError(error);
     }
-    await supabase.from("users").insert([{ user_id: data.user?.id, name: "guest", email }]);
+    if (!data?.user) return;
+    await supabase
+      .from("users")
+      .insert([{ id: data.user.id, name: "guest", email: data.user.email }]);
     return data;
   };
 

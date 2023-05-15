@@ -68,6 +68,7 @@ export interface Database {
       }
       rooms: {
         Row: {
+          create_user_id: string | null
           created_at: string | null
           deleted_at: string | null
           id: string
@@ -75,13 +76,15 @@ export interface Database {
           updated_at: string | null
         }
         Insert: {
+          create_user_id?: string | null
           created_at?: string | null
           deleted_at?: string | null
-          id: string
+          id?: string
           name?: string | null
           updated_at?: string | null
         }
         Update: {
+          create_user_id?: string | null
           created_at?: string | null
           deleted_at?: string | null
           id?: string
@@ -149,19 +152,17 @@ export interface Database {
           name: string | null
           role: string | null
           updated_at: string | null
-          user_id: string | null
         }
         Insert: {
           created_at?: string | null
           deleted_at?: string | null
           email?: string | null
-          id?: string
+          id: string
           image_url?: string | null
           language?: string | null
           name?: string | null
           role?: string | null
           updated_at?: string | null
-          user_id?: string | null
         }
         Update: {
           created_at?: string | null
@@ -173,7 +174,6 @@ export interface Database {
           name?: string | null
           role?: string | null
           updated_at?: string | null
-          user_id?: string | null
         }
       }
     }
