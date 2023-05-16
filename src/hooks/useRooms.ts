@@ -51,7 +51,7 @@ export const useRooms = () => {
     if (error) {
       throw error;
     }
-    if (!user || !data) return;
+    if (!data) return;
     const userRoom = { user_id: user.id, room_id: data[0].id };
     const { error: userRoomError } = await supabase.from(USER_ROOM_TABLE).insert([userRoom]);
     if (userRoomError) {

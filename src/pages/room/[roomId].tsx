@@ -4,15 +4,15 @@ import { useRouter } from "next/router";
 import { useMessages, useRooms } from "@/hooks";
 import { Room } from "@/types/room.types";
 
-type RoomPageProps = {};
+type ChatPageProps = {};
 
-const RoomPage: NextPage<RoomPageProps> = () => {
+const ChatPage: NextPage<ChatPageProps> = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [value, setValue] = useState<string>("");
   const router = useRouter();
   const { roomId } = router.query;
   const { fetchRoom } = useRooms();
-  const { messages, fetchMessages, observeMessages, postMessage } = useMessages();
+  const { messages, postMessage } = useMessages(roomId as string);
 
   useEffect(() => {
     if (!roomId) return;
@@ -20,8 +20,6 @@ const RoomPage: NextPage<RoomPageProps> = () => {
       const data = await fetchRoom(roomId as string);
       if (!data) return;
       setRoom(data[0]);
-      await fetchMessages(roomId as string);
-      observeMessages(roomId as string);
     })();
   }, [roomId]);
 
@@ -49,4 +47,4 @@ const RoomPage: NextPage<RoomPageProps> = () => {
   );
 };
 
-export default RoomPage;
+export default ChatPage;

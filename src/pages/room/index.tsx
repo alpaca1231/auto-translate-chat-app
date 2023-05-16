@@ -29,11 +29,9 @@ const Rooms: NextPage<RoomsProps> = () => {
       <button onClick={() => createRoom("test")}>Create room</button>
       <p>{user?.name}が参加しているROOM</p>
       {rooms.map((room) => (
-        <div key={room.id}>
-          <Link href={`/room/${room.id}`}>
-            <p>{room.name}</p>
-          </Link>
-        </div>
+        <Link href={`/room/${room.id}`} key={room.id}>
+          <p>{room.name}</p>
+        </Link>
       ))}
     </>
   );

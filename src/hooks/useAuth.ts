@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
 
+const USERS_TABLE = "users";
 export const useAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -21,7 +22,7 @@ export const useAuth = () => {
       setError(error);
     }
     if (!data?.user) return;
-    await supabase.from("users").insert([{ id: data.user.id, name: "guest", language: "ja" }]);
+    await supabase.from(USERS_TABLE).insert([{ id: data.user.id, name: "guest", language: "ja" }]);
     return data;
   };
 

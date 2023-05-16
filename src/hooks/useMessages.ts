@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Message } from "@/types/message.types";
 import { useUser } from "./useUser";
 
 const MESSAGE_TABLE = "messages";
 
-export const useMessages = () => {
+export const useMessages = (roomId: Message["room_id"]) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const { user } = useUser();
+
+  useEffect(() => {
+    if (!roomId) return;
+    fetchMessages(roomId);
+    observeMessages(roomId);
+  }, [roomId]);
+
   const fetchMessages = async (roomId: Message["room_id"]) => {
     const { data, error } = await supabase
       .from("messages")
@@ -54,9 +61,9 @@ export const useMessages = () => {
   ) => {
     const { data, error } = await supabase.from(MESSAGE_TABLE).insert([
       {
-        room_id: roomId,
-        message: message,
         user_id: user?.id,
+        room_id: roomId,
+        message,
         language: user?.language,
       },
     ]);
@@ -67,5 +74,5 @@ export const useMessages = () => {
     return data;
   };
 
-  return { messages, fetchMessages, observeMessages, postMessage };
+  return { messages, postMessage };
 };
