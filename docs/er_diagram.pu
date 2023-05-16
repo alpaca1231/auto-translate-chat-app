@@ -1,4 +1,4 @@
-@startuml
+@startuml ER
 
 !define table(x) class x << (T,#FFAAAA) >>
 !define primary_key(x) <b><u>x</u></b>
@@ -7,7 +7,7 @@
 table(users) {
   primary_key(id) UUID
   name VARCHAR
-  image_url VARCHAR
+  image_url TEXT
   language VARCHAR
   role VARCHAR
   created_at DATETIME
@@ -34,19 +34,19 @@ table(user_rooms) {
 
 table(messages) {
   primary_key(id) UUID
-  foreign_key(room_id) UUID
   foreign_key(user_id) UUID
-  content VARCHAR
-  original_language VARCHAR
+  foreign_key(room_id) UUID
+  message TEXT
+  language VARCHAR
   created_at DATETIME
   updated_at DATETIME
   deleted_at DATETIME
 }
 
 table(translations) {
-  primary_key(id) INT
+  primary_key(id) UUID
   foreign_key(message_id) UUID
-  content VARCHAR
+  message TEXT
   language VARCHAR
   created_at DATETIME
   updated_at DATETIME

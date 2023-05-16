@@ -36,31 +36,31 @@ export interface Database {
     Tables: {
       messages: {
         Row: {
-          content: string | null
           created_at: string | null
           deleted_at: string | null
           id: string
-          original_language: string | null
+          language: string | null
+          message: string | null
           room_id: string | null
           updated_at: string | null
           user_id: string | null
         }
         Insert: {
-          content?: string | null
           created_at?: string | null
           deleted_at?: string | null
-          id: string
-          original_language?: string | null
+          id?: string
+          language?: string | null
+          message?: string | null
           room_id?: string | null
           updated_at?: string | null
           user_id?: string | null
         }
         Update: {
-          content?: string | null
           created_at?: string | null
           deleted_at?: string | null
           id?: string
-          original_language?: string | null
+          language?: string | null
+          message?: string | null
           room_id?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -94,28 +94,28 @@ export interface Database {
       }
       translations: {
         Row: {
-          content: string | null
           created_at: string | null
           id: string
           language: string | null
+          message: string | null
           message_id: string | null
-          update_at: string | null
+          updated_at: string | null
         }
         Insert: {
-          content?: string | null
-          created_at?: string | null
-          id: string
-          language?: string | null
-          message_id?: string | null
-          update_at?: string | null
-        }
-        Update: {
-          content?: string | null
           created_at?: string | null
           id?: string
           language?: string | null
+          message?: string | null
           message_id?: string | null
-          update_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          language?: string | null
+          message?: string | null
+          message_id?: string | null
+          updated_at?: string | null
         }
       }
       user_rooms: {
@@ -145,7 +145,6 @@ export interface Database {
         Row: {
           created_at: string | null
           deleted_at: string | null
-          email: string | null
           id: string
           image_url: string | null
           language: string | null
@@ -156,7 +155,6 @@ export interface Database {
         Insert: {
           created_at?: string | null
           deleted_at?: string | null
-          email?: string | null
           id: string
           image_url?: string | null
           language?: string | null
@@ -167,7 +165,6 @@ export interface Database {
         Update: {
           created_at?: string | null
           deleted_at?: string | null
-          email?: string | null
           id?: string
           image_url?: string | null
           language?: string | null
