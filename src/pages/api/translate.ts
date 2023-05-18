@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import ISO6391 from "iso-639-1";
 import { openaiClient } from "@/lib/axios";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -6,7 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const response = await openaiClient.post("", {
     model: "text-davinci-003",
-    prompt: prompt(message, language),
+    prompt: prompt(message, ISO6391.getName(language)),
+    temperature: 0.3,
+    max_tokens: 140,
   });
 
   if (response.status !== 200) {
@@ -20,13 +23,4 @@ const prompt = (message: string, language: string) => `
 Translate this into ${language}:
 
 ${message}
-
-Please output in the following format.
-# format
-\`\`\`
-{
-  lang: ${language},
-  message: result,
-}
-\`\`\`
 `;
