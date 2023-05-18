@@ -178,7 +178,19 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      translated_messages: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string | null
+          deleted_at: string | null
+          id: string
+          language: string | null
+          message: string | null
+          room_id: string | null
+          updated_at: string | null
+          user_id: string | null
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
