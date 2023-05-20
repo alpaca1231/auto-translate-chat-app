@@ -1,3 +1,34 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:import/recommended",
+    "plugin:import/warnings",
+    "prettier"
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling"],
+          "object",
+          "type",
+          "index"
+        ],
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "pathGroups": [
+          { "pattern": "@/lib/**", "group": "internal", "position": "before" },
+          { "pattern": "@/hooks/**", "group": "internal", "position": "before" },
+          { "pattern": "@/components/**", "group": "internal", "position": "before" },
+          { "pattern": "@/features/**", "group": "internal", "position": "before" },
+          { "pattern": "./**.module.scss", "group": "index", "position": "before" } // styles
+        ]
+      }
+    ]
+  }
 }
