@@ -1,6 +1,5 @@
+import { USERS_TABLE } from "@/constants/tables";
 import { useSupabase } from "@/lib/supabase-provider";
-
-const USERS_TABLE = "users";
 export const useAuth = () => {
   const { supabase } = useSupabase();
 

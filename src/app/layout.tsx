@@ -31,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 </>
               )}
             </header>
-            {children}
+            <main>{children}</main>
           </UserProvider>
         </SupabaseProvider>
       </body>

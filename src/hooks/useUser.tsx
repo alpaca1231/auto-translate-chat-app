@@ -2,9 +2,10 @@
 
 import { createContext, ReactNode, useState, useEffect, useCallback, useContext } from "react";
 
+import { USERS_TABLE } from "@/constants/tables";
 import { useSupabase } from "@/lib/supabase-provider";
 
-import type { User } from "@/types/user.type";
+import type { User } from "@/types/users.types";
 
 type UserContext = User | null;
 
@@ -16,7 +17,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUser = useCallback(
     async (userId: User["id"]) => {
-      const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
+      const { data, error } = await supabase
+        .from(USERS_TABLE)
+        .select("*")
+        .eq("id", userId)
+        .single();
 
       if (error) throw error;
       setUser(data);
