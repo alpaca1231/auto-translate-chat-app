@@ -1,8 +1,7 @@
-import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { headers, cookies } from "next/headers";
-
-// import "./globals.css";
+import { SignOut, SignIn, SignUp } from "@/components";
+import { UserProvider } from "@/hooks";
 import SupabaseProvider from "@/lib/supabase-provider";
+import { createServerClient } from "@/lib/supabase-server";
 
 export const metadata = {
   title: "Az",
@@ -10,10 +9,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createServerComponentSupabaseClient({
-    headers,
-    cookies,
-  });
+  const supabase = createServerClient();
 
   const {
     data: { session },
@@ -22,7 +18,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body>
-        <SupabaseProvider session={session}>{children}</SupabaseProvider>
+        <SupabaseProvider session={session}>
+          <UserProvider>
+            <header>
+              {session ? (
+                <SignOut />
+              ) : (
+                <>
+                  <SignIn />
+                  <br />
+                  <SignUp />
+                </>
+              )}
+            </header>
+            {children}
+          </UserProvider>
+        </SupabaseProvider>
       </body>
     </html>
   );

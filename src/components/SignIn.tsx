@@ -1,9 +1,12 @@
+"use client"; // Supabase auth needs to be triggered client-side
+
 import { useState } from "react";
+
 import { useAuth } from "@/hooks/useAuth";
 
 export const SignIn = () => {
   const [value, setValue] = useState({ email: "", password: "" });
-  const { signIn, error } = useAuth();
+  const { signIn } = useAuth();
 
   const { email, password } = value;
   return (
@@ -21,7 +24,6 @@ export const SignIn = () => {
         onChange={(e) => setValue((prev) => ({ ...prev, password: e.target.value }))}
       />
       <button onClick={() => signIn(email, password)}>Sign in</button>
-      {error && <p>{error.message}</p>}
     </>
   );
 };

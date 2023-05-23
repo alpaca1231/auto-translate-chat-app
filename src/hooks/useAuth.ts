@@ -1,25 +1,14 @@
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
-import { Session } from "@supabase/supabase-js";
+import { useSupabase } from "@/lib/supabase-provider";
 
 const USERS_TABLE = "users";
 export const useAuth = () => {
-  const [session, setSession] = useState<Session | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => authListener.subscription.unsubscribe();
-  }, []);
+  const { supabase } = useSupabase();
 
   // Email signUp
   const signUp = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) {
-      setError(error);
+      throw error;
     }
     if (!data?.user) return;
     await supabase.from(USERS_TABLE).insert([{ id: data.user.id, name: "guest", language: "ja" }]);
@@ -33,7 +22,7 @@ export const useAuth = () => {
       password,
     });
     if (error) {
-      setError(error);
+      throw error;
     }
     return data;
   };
@@ -42,9 +31,9 @@ export const useAuth = () => {
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      setError(error);
+      throw error;
     }
   };
 
-  return { session, error, signUp, signIn, signOut };
+  return { signUp, signIn, signOut };
 };

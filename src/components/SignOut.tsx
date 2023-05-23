@@ -1,4 +1,7 @@
+"use client"; // Supabase auth needs to be triggered client-side
+
 import { FC } from "react";
+
 import { useAuth } from "@/hooks/useAuth";
 
 type SignOutProps = {};
