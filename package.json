@@ -16,7 +16,7 @@
     "fix": "run-s format lint:fix"
   },
   "dependencies": {
-    "@supabase/auth-helpers-nextjs": "^0.6.1",
+    "@supabase/auth-helpers-nextjs": "^0.7.0",
     "@supabase/supabase-js": "^2.21.0",
     "axios": "^1.4.0",
     "iso-639-1": "^2.1.15",

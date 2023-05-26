@@ -1,7 +1,28 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+
 import { Database } from "@/types/database.types";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+// client-side supabase client
+export const supabaseClient = () => createClientComponentClient<Database>();
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
+// server-side supabase client
+export const serverClient = () =>
+  createServerComponentClient<Database>({
+    cookies,
+  });
+
+// server-action supabase client
+export const serverActionClient = () =>
+  createServerActionClient<Database>({
+    cookies,
+  });
+
+// route-handler supabase client
+export const routeHandlerClient = () =>
+  createRouteHandlerClient<Database>({
+    cookies,
+  });
