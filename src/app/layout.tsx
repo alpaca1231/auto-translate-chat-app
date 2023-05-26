@@ -1,7 +1,7 @@
-import { SignOut, SignIn, SignUp } from "@/components";
-import { UserProvider } from "@/hooks";
-import SupabaseProvider from "@/lib/supabase-provider";
-import { createServerClient } from "@/lib/supabase-server";
+import { SignIn } from "@/components/SignIn";
+import { SignOut } from "@/components/SignOut";
+import { UserProvider } from "@/hooks/useUser";
+import { serverClient } from "@/lib/supabase-server";
 
 export const metadata = {
   title: "Az",
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createServerClient();
+  const supabase = serverClient();
 
   const {
     data: { session },
@@ -18,22 +18,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body>
-        <SupabaseProvider session={session}>
-          <UserProvider>
-            <header>
-              {session ? (
-                <SignOut />
-              ) : (
-                <>
-                  <SignIn />
-                  <br />
-                  <SignUp />
-                </>
-              )}
-            </header>
-            <main>{children}</main>
-          </UserProvider>
-        </SupabaseProvider>
+        <UserProvider>
+          <header>
+            {session ? (
+              <SignOut />
+            ) : (
+              <>
+                <SignIn />
+              </>
+            )}
+          </header>
+          <main>{children}</main>
+        </UserProvider>
       </body>
     </html>
   );

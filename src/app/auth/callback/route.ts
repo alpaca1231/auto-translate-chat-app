@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { routeHandlerClient } from "@/lib/supabase";
+import { routeHandlerClient } from "@/lib/supabase-server";
 
 import type { NextRequest } from "next/server";
 

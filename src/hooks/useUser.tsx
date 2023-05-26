@@ -1,58 +1,60 @@
 "use client";
 
-import { createContext, ReactNode, useState, useEffect, useCallback, useContext } from "react";
+import { useRouter } from "next/navigation";
+import { createContext, ReactNode, useState, useEffect, useContext, useCallback } from "react";
 
 import { USERS_TABLE } from "@/constants/tables";
-import { useSupabase } from "@/lib/supabase-provider";
+import { supabaseClient } from "@/lib/supabase-client";
 
-import type { User } from "@/types/users.types";
+import type { User, UserContext } from "@/types/users.types";
 
-type UserContext = User | null;
-
-const Context = createContext<UserContext | undefined>(undefined);
+const Context = createContext<UserContext>(null);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserContext>(null);
-  const { supabase } = useSupabase();
-
-  const fetchUser = useCallback(
-    async (userId: User["id"]) => {
-      const { data, error } = await supabase
-        .from(USERS_TABLE)
-        .select("*")
-        .eq("id", userId)
-        .single();
-
-      if (error) throw error;
-      setUser(data);
-    },
-    [supabase]
-  );
+  const router = useRouter();
+  const { fetchUser } = useUser();
+  const supabase = supabaseClient();
 
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (!session || event === "SIGNED_OUT") {
-        setUser(null);
-        return;
-      }
-      if (event === "SIGNED_IN") {
-        await fetchUser(session.user.id);
+      try {
+        if (!session || event === "SIGNED_OUT") {
+          setUser(null);
+          router.refresh();
+          return;
+        }
+        if (event === "SIGNED_IN") {
+          const { data, error } = await fetchUser(session.user.id);
+          if (error) throw error;
+          setUser(data);
+        }
+        router.refresh();
+      } catch (error) {
+        console.error(error);
       }
     });
 
     return () => {
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
     };
-  }, []);
+  }, [fetchUser, supabase]);
 
   return <Context.Provider value={user}>{children}</Context.Provider>;
 };
+
 export const useUser = () => {
-  const context = useContext(Context);
-  if (context === undefined) {
-    throw new Error("useUser must be used within a UserProvider");
-  }
-  return context;
+  const user = useContext(Context);
+  const supabase = supabaseClient();
+
+  const fetchUser = useCallback(
+    async (userId: User["id"]) => {
+      return supabase.from(USERS_TABLE).select("*").eq("id", userId).single();
+    },
+    [supabase]
+  );
+
+  return { user, fetchUser };
 };

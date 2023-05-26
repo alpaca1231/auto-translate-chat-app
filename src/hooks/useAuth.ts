@@ -1,38 +1,20 @@
-import { USERS_TABLE } from "@/constants/tables";
-import { useSupabase } from "@/lib/supabase-provider";
+"use client";
+
+import { supabaseClient } from "@/lib/supabase-client";
+
 export const useAuth = () => {
-  const { supabase } = useSupabase();
+  const supabase = supabaseClient();
 
-  // Email signUp
-  const signUp = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) {
-      throw error;
-    }
-    if (!data?.user) return;
-    await supabase.from(USERS_TABLE).insert([{ id: data.user.id, name: "guest", language: "ja" }]);
-    return data;
-  };
-
-  // Email signIn
-  const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+  const signInWithGoogle = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
     });
-    if (error) {
-      throw error;
-    }
-    return data;
   };
 
   // Sign out
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      throw error;
-    }
+    await supabase.auth.signOut();
   };
 
-  return { signUp, signIn, signOut };
+  return { signInWithGoogle, signOut };
 };
